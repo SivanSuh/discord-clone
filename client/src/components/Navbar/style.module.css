@@ -1,0 +1,12 @@
+.navbar {
+    @apply w-full bg-[#F4F4ED] p-4
+}
+.flexStructure{
+    @apply flex justify-between items-center max-w-7xl mx-auto
+}
+.button {
+    @apply bg-black text-white py-1 px-5 rounded-md
+}
+.register{
+    @apply button bg-[#5433EB] !important
+}
