@@ -9,6 +9,9 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
   errors?: FieldErrors;
   required?: boolean;
+  name?: string;
+  onChange?: (e: any) => void;
+  value?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,6 +20,9 @@ const Input: React.FC<InputProps> = ({
   type,
   errors,
   required,
+  value,
+  onChange,
+  name,
   register,
 }) => {
   return (
@@ -26,6 +32,9 @@ const Input: React.FC<InputProps> = ({
       className={Style.input}
       placeholder={placeholder}
       type={type}
+      value={value}
+      name={name}
+      onChange={onChange}
     />
   );
 };

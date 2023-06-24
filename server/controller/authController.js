@@ -1,23 +1,24 @@
-const userModel = require("../models/UserModel");
+const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   try {
-    const user = await userModel.findOne({ userName: req.body.userName });
-    if (!user) return res.status(404).send("User not found");
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
 
-    const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-    if (!isCorrect) return res.status(400).send("Wrong Password or usernamae");
-
-    const token = jwt.sign({
-      id: user._id,
-    });
-
-    const { password, ...info } = user._doc;
-    res.status(200).send(info);
+    if (user) {
+      bcrypt.compare(password, user.password, (err, same) => {
+        if (same) {
+          res.status(200).send(user);
+        }
+      });
+    }
   } catch (error) {
-    res.status(500).send("Something went wrong");
+    res.status(400).json({
+      status: "fail",
+      error,
+    });
   }
 };
 const logout = (req, res) => {};
