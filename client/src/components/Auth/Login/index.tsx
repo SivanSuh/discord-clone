@@ -37,18 +37,18 @@ const Login = () => {
           register={register}
           placeholder="Email giriniz"
           type="email"
-          value={values.email}
+          // value={values.email}
           name="email"
-          onChange={changeHandler}
+          // onChange={changeHandler}
         />
         <Input
           id="password"
           register={register}
           placeholder="Password"
           type="password"
-          value={values.password}
+          // value={values.password}
           name="password"
-          onChange={changeHandler}
+          // onChange={changeHandler}
         />
         <Button type="submit" title="Gönder" />
       </form>

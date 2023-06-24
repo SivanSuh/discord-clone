@@ -22,15 +22,29 @@ const login = async (req, res) => {
   }
 };
 const logout = (req, res) => {};
+
 const register = async (req, res) => {
   try {
-    const hash = bcrypt.hashSync(req.body.password, 5);
-    const newUser = new userModel({
-      ...req.body,
+    const { email, userName, password, confirmPassword } = req.body;
+    const userExist = await UserModel.findOne({ email });
+    if (userExist) {
+      return res
+        .status(400)
+        .json({ message: "bu emaile sahip bir kullanıcı mevcut" });
+    }
+    if (password !== confirmPassword) {
+      return res.status(404).json({ message: "Şifreler eşleşmiyor" });
+    }
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    const newUser = new UserModel({
+      email,
+      userName,
       password: hash,
     });
     await newUser.save();
-    res.status(200).send("User Createed");
+    res.status(200).send(newUser);
   } catch (error) {
     res.status(500).send("Something went error");
   }
