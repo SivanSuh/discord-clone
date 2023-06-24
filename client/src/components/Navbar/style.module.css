@@ -1,5 +1,5 @@
 .navbar {
-    @apply w-full bg-[#F4F4ED] p-4
+    @apply w-full bg-[#292841] p-4 text-white
 }
 .flexStructure{
     @apply flex justify-between items-center max-w-7xl mx-auto

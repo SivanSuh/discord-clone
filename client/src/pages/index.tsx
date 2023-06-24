@@ -8,7 +8,11 @@ import LoginPage from "./auth/login";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { isLoggin } = useSelector((state: RootState) => state.user);
+  const { isLoggin, formContent } = useSelector(
+    (state: RootState) => state.user
+  );
 
-  return <>{isLoggin ? <Layout>merhabba</Layout> : <LoginPage />}</>;
+  return (
+    <>{isLoggin ? <Layout>{formContent.userName}</Layout> : <LoginPage />}</>
+  );
 }

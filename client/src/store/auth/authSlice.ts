@@ -12,7 +12,7 @@ export const loginAuth = createAsyncThunk("user/login", async (values:Object) =>
     const response = await axios.post(`${API_URL}/auth/login`, values)
     const data = await response.data
     console.log("response ",response)
-    sessionStorage.setItem("user_ınfo",JSON.stringify(values))
+    sessionStorage.setItem("user_ınfo",JSON.stringify(response.data))
     return data
 })
 
