@@ -13,8 +13,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </Head>
       <div className={Style.layout}>
         <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <main className="h-[95vh]">{children}</main>
+        {/* <Footer /> */}
       </div>
     </>
   );

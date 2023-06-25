@@ -12,6 +12,7 @@ interface InputProps {
   name?: string;
   onChange?: (e: any) => void;
   value?: string;
+  className?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -19,6 +20,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   type,
   errors,
+  className,
   required,
   value,
   onChange,

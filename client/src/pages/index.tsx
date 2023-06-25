@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import LoginPage from "./auth/login";
+import MainTemplate from "@/components/Main";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,14 @@ export default function Home() {
   );
 
   return (
-    <>{isLoggin ? <Layout>{formContent.userName}</Layout> : <LoginPage />}</>
+    <>
+      {isLoggin ? (
+        <Layout>
+          <MainTemplate formContent={formContent} />
+        </Layout>
+      ) : (
+        <LoginPage />
+      )}
+    </>
   );
 }

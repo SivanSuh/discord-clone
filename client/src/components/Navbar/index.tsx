@@ -12,7 +12,7 @@ const Navbar = () => {
           {/* <img src="../../logo.svg" /> */}
           <h1>Chat App</h1>
         </Link>
-        <div>Search</div>
+        <div></div>
         <div className="flex items-center gap-2">
           {isLoggin ? (
             <Link href="/auth/login">

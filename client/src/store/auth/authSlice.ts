@@ -14,7 +14,6 @@ export const loginAuth = createAsyncThunk(
     const response = await axios.post(`${API_URL}/auth/login`, values);
     const data = await response.data;
     console.log("response ", response);
-    sessionStorage.setItem("user_ınfo", JSON.stringify(response.data));
     return data;
   }
 );
@@ -24,7 +23,6 @@ export const registerAuth = createAsyncThunk(
   async (values: Object) => {
     const response = await axios.post(`${API_URL}/auth/register`, values);
     const data = await response.data;
-    sessionStorage.setItem("new-user", JSON.stringify(response.data));
     return data;
   }
 );
