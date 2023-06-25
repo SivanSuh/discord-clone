@@ -5,7 +5,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 interface InputProps {
   id: string;
   placeholder: string;
-  type: "text" | "email" | "password";
+  type: "text" | "email" | "password" | "file";
   register: UseFormRegister<FieldValues>;
   errors?: FieldErrors;
   required?: boolean;

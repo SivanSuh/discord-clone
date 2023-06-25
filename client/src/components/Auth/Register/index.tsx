@@ -33,6 +33,13 @@ const Register = () => {
         />
         <Input
           register={register}
+          id="file"
+          placeholder="Resim"
+          type="file"
+          name="file"
+        />
+        <Input
+          register={register}
           id="password"
           placeholder="Password"
           type="password"

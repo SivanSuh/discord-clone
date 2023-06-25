@@ -27,6 +27,7 @@ export const registerAuth = createAsyncThunk(
   }
 );
 
+
 const initialState: UserProp = {
   formContent: {},
   isLoggin: false,

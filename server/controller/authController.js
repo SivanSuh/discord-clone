@@ -21,6 +21,14 @@ const login = async (req, res) => {
     });
   }
 };
+const allUser = async (req, res) => {
+  try {
+    const getUser = await UserModel.find();
+    res.send(getUser);
+  } catch (err) {
+    console.log(err);
+  }
+};
 const logout = (req, res) => {};
 
 const register = async (req, res) => {
@@ -54,4 +62,5 @@ module.exports = {
   login,
   logout,
   register,
+  allUser,
 };
