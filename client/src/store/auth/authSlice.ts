@@ -3,9 +3,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = process.env.NEXT_PUBLIC_AUTH_API;
 
+ interface AllUserProp {
+  userName:string;
+  img:string
+}
+
 interface UserProp {
   formContent: Object | any;
   isLoggin: boolean;
+  allUser: any[]
 }
 
 export const loginAuth = createAsyncThunk(
@@ -27,10 +33,17 @@ export const registerAuth = createAsyncThunk(
   }
 );
 
+export const allUsers = createAsyncThunk("allUser", async () => {
+  const response = await axios.get(`${API_URL}/auth/allUser`)
+  const data = await response.data
+  return data
+})
+
 
 const initialState: UserProp = {
   formContent: {},
   isLoggin: false,
+  allUser:[]
 };
 
 const authSlice = createSlice({
@@ -54,14 +67,23 @@ const authSlice = createSlice({
     builder.addCase(registerAuth.pending, (state, action) => {
       state.isLoggin = false;
     });
+    builder.addCase(registerAuth.rejected, (state, action) => {
+      state.isLoggin = false;
+    });
     builder.addCase(registerAuth.fulfilled, (state, action) => {
       state.formContent = action.payload;
       state.isLoggin = true;
     });
-    builder.addCase(registerAuth.rejected, (state, action) => {
-      state.isLoggin = false;
-    });
+
     // register finish
+
+    // allUser start 
+    builder.addCase(allUsers.pending,(state) => {
+      state.isLoggin = true
+    })
+    builder.addCase(allUsers.fulfilled,(state,action) => {
+      state.allUser = action.payload
+    })
   },
 });
 

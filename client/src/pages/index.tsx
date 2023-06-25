@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import LoginPage from "./auth/login";
 import MainTemplate from "@/components/Main";
+import ChatContent from "@/components/ChatContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { isLoggin, formContent } = useSelector(
+  const { isLoggin, formContent, allUser } = useSelector(
     (state: RootState) => state.user
   );
 
@@ -17,7 +18,10 @@ export default function Home() {
     <>
       {isLoggin ? (
         <Layout>
-          <MainTemplate formContent={formContent} />
+          <div className="flex h-full">
+            <MainTemplate formContent={formContent} allUser={allUser} />
+            <ChatContent />
+          </div>
         </Layout>
       ) : (
         <LoginPage />
