@@ -1,4 +1,4 @@
-import {combineReducers, configureStore } from '@reduxjs/toolkit'
+import {AnyAction, Reducer, combineReducers, configureStore } from '@reduxjs/toolkit'
 import authSlice from './auth/authSlice'
 import { persistReducer, persistStore,   FLUSH,
     REHYDRATE,
@@ -9,17 +9,29 @@ import { persistReducer, persistStore,   FLUSH,
 import storage from "redux-persist/lib/storage"
 import { useDispatch } from 'react-redux'
 
+
 const rootReducer = combineReducers({
     user:authSlice
 })
 
 const persistConfig = {
-    key:"root",
-    version:1,
-    storage
+  key:"root",
+  version:1,
+  // blacklist:["user"],
+  storage
 }
 
-const persistedReducer = persistReducer(persistConfig,rootReducer)
+
+const appReducer:Reducer = (state:RootState,action:AnyAction) => {
+  if(action.type === "user/clearResults"){
+    storage.removeItem("persist:root")
+
+    state = {} as RootState
+  }
+  return rootReducer(state,action)
+}
+
+const persistedReducer = persistReducer(persistConfig,appReducer)
 
 export const store = configureStore({
     reducer:persistedReducer,

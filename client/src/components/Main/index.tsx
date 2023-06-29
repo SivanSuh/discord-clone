@@ -46,18 +46,20 @@ const MainTemplate: React.FC<MainProps> = ({
           <h2 className="ml-5">Arkadaşlar</h2>
         </div>
         <div>
-          {allUser.map((items) => {
-            console.log("items id", items);
-            return (
-              <User
-                image={items.img}
-                id={items._id}
-                select={select}
-                title={items.userName}
-                onClick={() => checkMessage(items)}
-              />
-            );
-          })}
+          {allUser
+            .filter((val) => formContent._id !== val._id)
+            .map((items) => {
+              console.log("items id", items);
+              return (
+                <User
+                  image={items.img}
+                  id={items._id}
+                  select={select}
+                  title={items.userName}
+                  onClick={() => checkMessage(items)}
+                />
+              );
+            })}
         </div>
         <div className="absolute bottom-0 w-full">
           <User

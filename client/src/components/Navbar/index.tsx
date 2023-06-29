@@ -1,10 +1,18 @@
 import Link from "next/link";
 import Style from "./style.module.css";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { AppDispatch, RootState } from "@/store";
+import { clearResult } from "@/store/auth/authSlice";
 
 const Navbar = () => {
   const { isLoggin } = useSelector((state: RootState) => state.user);
+
+  const dispatch = AppDispatch();
+
+  const logoutFunction = async () => {
+    await dispatch(clearResult());
+  };
+
   return (
     <div className={Style.navbar}>
       <div className={Style.flexStructure}>
@@ -15,9 +23,11 @@ const Navbar = () => {
         <div></div>
         <div className="flex items-center gap-2">
           {isLoggin ? (
-            <Link href="/auth/login">
-              <div className={Style.button}>Logout</div>
-            </Link>
+            <>
+              <div className={Style.button} onClick={logoutFunction}>
+                Logout
+              </div>
+            </>
           ) : (
             <>
               <Link href="/auth/login">

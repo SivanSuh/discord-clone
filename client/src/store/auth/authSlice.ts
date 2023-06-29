@@ -48,7 +48,9 @@ const initialState: UserProp = {
 const authSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    clearResult(){}
+  },
   extraReducers(builder) {
     // login start
     builder.addCase(loginAuth.pending, (state, action) => {
@@ -86,4 +88,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { clearResult } = authSlice.actions
 export default authSlice.reducer;

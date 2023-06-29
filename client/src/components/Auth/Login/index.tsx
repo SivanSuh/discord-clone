@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "@/store";
 import { loginAuth } from "@/store/auth/authSlice";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const { register, handleSubmit } = useForm<FieldValues>();
@@ -15,6 +16,7 @@ const Login = () => {
     password: "",
   });
   const user = useSelector((state: RootState) => state.user);
+  const router = useRouter();
 
   const dispatch = AppDispatch();
 
@@ -27,6 +29,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     await dispatch(loginAuth(data));
+    router.push("/");
   };
   return (
     <Layout>
