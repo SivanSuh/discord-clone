@@ -3,12 +3,17 @@ import React from "react";
 interface UserProp {
   image: string;
   title: string;
+  id: string;
   onClick?: (value: any) => void;
 }
 
-const User: React.FC<UserProp> = ({ image, title, onClick }) => {
+const User: React.FC<UserProp> = ({ image, title, onClick, id }) => {
+  console.log("id", id);
   return (
-    <div className="flex items-center p-2  text-white" onClick={onClick}>
+    <div
+      className={`flex items-center p-2  text-white cursor-pointer ease-in-out hover:bg-red-500 `}
+      onClick={onClick}
+    >
       <div className="w-9 h-9 ">
         <img className="w-full" src={image} alt={title} />
       </div>

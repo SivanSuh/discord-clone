@@ -9,9 +9,14 @@ import { AppDispatch } from "@/store";
 interface MainProps {
   formContent: any;
   allUser: any[];
+  setSelect: any;
 }
 
-const MainTemplate: React.FC<MainProps> = ({ formContent, allUser }) => {
+const MainTemplate: React.FC<MainProps> = ({
+  formContent,
+  allUser,
+  setSelect,
+}) => {
   const { register, handleSubmit } = useForm<FieldValues>();
   const dispatch = AppDispatch();
   useEffect(() => {
@@ -19,7 +24,13 @@ const MainTemplate: React.FC<MainProps> = ({ formContent, allUser }) => {
   }, [dispatch]);
 
   const checkMessage = (e: any) => {
-    console.log("eeeee", e.target.innerText);
+    console.log("eeeee", e);
+
+    setSelect({
+      name: e.userName,
+      image: e.img,
+      id: e.id,
+    });
   };
   return (
     <div className="bg-[#1C1B29] h-full w-1/4 text-[#E3E5E8]">
@@ -35,16 +46,24 @@ const MainTemplate: React.FC<MainProps> = ({ formContent, allUser }) => {
           <h2 className="ml-5">Arkadaşlar</h2>
         </div>
         <div>
-          {allUser.map((items) => (
-            <User
-              image={items.img}
-              title={items.userName}
-              onClick={checkMessage}
-            />
-          ))}
+          {allUser.map((items) => {
+            console.log("items ", items);
+            return (
+              <User
+                image={items.img}
+                id={items._id}
+                title={items.userName}
+                onClick={() => checkMessage(items)}
+              />
+            );
+          })}
         </div>
         <div className="absolute bottom-0 w-full">
-          <User image={formContent.img} title={formContent.userName} />
+          <User
+            id={formContent._id}
+            image={formContent.img}
+            title={formContent.userName}
+          />
         </div>
       </div>
     </div>

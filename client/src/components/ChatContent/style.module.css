@@ -1,3 +1,12 @@
 .mainContent {
-    @apply bg-sky-300 w-full
+    @apply bg-sky-300 w-full flex flex-col
+}
+.chatNavbar {
+    @apply w-full bg-white h-16 flex items-center p-2
+}
+.mainContent {
+    @apply bg-gray-300 flex-1
+}
+.footer {
+    @apply flex items-center
 }
