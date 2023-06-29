@@ -24,8 +24,6 @@ const MainTemplate: React.FC<MainProps> = ({
   }, [dispatch]);
 
   const checkMessage = (e: any) => {
-    console.log("eeeee", e);
-
     setSelect({
       name: e.userName,
       image: e.img,
@@ -47,7 +45,6 @@ const MainTemplate: React.FC<MainProps> = ({
         </div>
         <div>
           {allUser.map((items) => {
-            console.log("items ", items);
             return (
               <User
                 image={items.img}

@@ -20,7 +20,6 @@ export default function Home() {
     name: "",
     image: "",
   });
-  console.log("select", select);
   return (
     <>
       {isLoggin ? (

@@ -11,7 +11,6 @@ const Register = () => {
   const dispatch = AppDispatch();
 
   const onSubmit = async (data: any) => {
-    console.log("dataaaa", data);
     await dispatch(registerAuth(data));
   };
   return (

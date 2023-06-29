@@ -8,7 +8,6 @@ interface UserProp {
 }
 
 const User: React.FC<UserProp> = ({ image, title, onClick, id }) => {
-  console.log("id", id);
   return (
     <div
       className={`flex items-center p-2  text-white cursor-pointer ease-in-out hover:bg-red-500 `}

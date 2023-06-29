@@ -26,7 +26,6 @@ const Login = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log("eeeeee", data);
     await dispatch(loginAuth(data));
   };
   return (

@@ -19,7 +19,6 @@ export const loginAuth = createAsyncThunk(
   async (values: Object) => {
     const response = await axios.post(`${API_URL}/auth/login`, values);
     const data = await response.data;
-    console.log("response ", response);
     return data;
   }
 );
