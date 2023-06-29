@@ -10,12 +10,14 @@ interface MainProps {
   formContent: any;
   allUser: any[];
   setSelect: any;
+  select?: any;
 }
 
 const MainTemplate: React.FC<MainProps> = ({
   formContent,
   allUser,
   setSelect,
+  select,
 }) => {
   const { register, handleSubmit } = useForm<FieldValues>();
   const dispatch = AppDispatch();
@@ -27,7 +29,7 @@ const MainTemplate: React.FC<MainProps> = ({
     setSelect({
       name: e.userName,
       image: e.img,
-      id: e.id,
+      id: e._id,
     });
   };
   return (
@@ -45,10 +47,12 @@ const MainTemplate: React.FC<MainProps> = ({
         </div>
         <div>
           {allUser.map((items) => {
+            console.log("items id", items);
             return (
               <User
                 image={items.img}
                 id={items._id}
+                select={select}
                 title={items.userName}
                 onClick={() => checkMessage(items)}
               />

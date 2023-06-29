@@ -17,7 +17,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             <div className="w-9 h-9 ">
               <img className="w-full" src={select.image} alt={select?.name} />
             </div>
-            <span>{select?.name}</span>
+            <span className="mx-3">{select?.name}</span>
           </nav>
           <main className={Style.mainContent}>chat content</main>
           <footer className={Style.footer}>

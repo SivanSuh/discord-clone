@@ -28,6 +28,7 @@ export default function Home() {
             <MainTemplate
               formContent={formContent}
               allUser={allUser}
+              select={select}
               setSelect={setSelect}
             />
             <ChatContent select={select} />
