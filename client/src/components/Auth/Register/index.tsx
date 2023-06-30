@@ -5,13 +5,16 @@ import Style from "./style.module.css";
 import { FieldValues, useForm } from "react-hook-form";
 import { AppDispatch } from "@/store";
 import { registerAuth } from "@/store/auth/authSlice";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const { register, handleSubmit } = useForm<FieldValues>();
   const dispatch = AppDispatch();
 
+  const router = useRouter();
   const onSubmit = async (data: any) => {
     await dispatch(registerAuth(data));
+    router.push("/auth/login");
   };
   return (
     <Layout>
@@ -32,10 +35,10 @@ const Register = () => {
         />
         <Input
           register={register}
-          id="file"
+          id="img"
           placeholder="Resim"
-          type="file"
-          name="file"
+          type="text"
+          name="img"
         />
         <Input
           register={register}

@@ -2,6 +2,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import Input from "../Atoms/Input";
 import Style from "./style.module.css";
 import Button from "../Atoms/Button";
+import ChatDialog from "./ChatDialog";
 
 interface ChatContentProps {
   select: any;
@@ -19,7 +20,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             </div>
             <span className="mx-3">{select?.name}</span>
           </nav>
-          <main className={Style.mainContent}>chat content</main>
+          <main className={Style.mainContent}>
+            <ChatDialog />
+            <ChatDialog color="red" position="end" />
+          </main>
           <footer className={Style.footer}>
             <div className="flex-1">
               <Input

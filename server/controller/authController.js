@@ -33,7 +33,7 @@ const logout = (req, res) => {};
 
 const register = async (req, res) => {
   try {
-    const { email, userName, password, confirmPassword } = req.body;
+    const { email, userName, password, confirmPassword, img } = req.body;
     const userExist = await UserModel.findOne({ email });
     if (userExist) {
       return res
@@ -50,6 +50,7 @@ const register = async (req, res) => {
       email,
       userName,
       password: hash,
+      img,
     });
     await newUser.save();
     res.status(200).send(newUser);
