@@ -22,16 +22,16 @@ const persistConfig = {
 }
 
 
-const appReducer:Reducer = (state:RootState,action:AnyAction) => {
-  if(action.type === "user/clearResults"){
-    storage.removeItem("persist:root")
+// const appReducer:Reducer = (state:RootState,action:AnyAction) => {
+//   if(action.type === "user/clearResults"){
+//     storage.removeItem("persist:root")
 
-    state = {} as RootState
-  }
-  return rootReducer(state,action)
-}
+//     state = {} as RootState
+//   }
+//   return rootReducer(state,action)
+// }
 
-const persistedReducer = persistReducer(persistConfig,appReducer)
+const persistedReducer = persistReducer(persistConfig,rootReducer)
 
 export const store = configureStore({
     reducer:persistedReducer,
@@ -43,6 +43,6 @@ export const store = configureStore({
     }),
 
 })
-export const persistor = persistStore(store)
+// export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>
 export const AppDispatch : () => typeof store.dispatch = useDispatch;

@@ -19,15 +19,17 @@ export const loginAuth = createAsyncThunk(
   async (values: Object) => {
     const response = await axios.post(`${API_URL}/auth/login`, values);
     const data = await response.data;
+    sessionStorage.setItem("userInfo",JSON.stringify(response.data))
     return data;
   }
 );
 
 export const registerAuth = createAsyncThunk(
-  "user/logout",
+  "user/register",
   async (values: Object) => {
     const response = await axios.post(`${API_URL}/auth/register`, values);
     const data = await response.data;
+    sessionStorage.setItem("userInfo",JSON.stringify(response.data))
     return data;
   }
 );
@@ -49,7 +51,12 @@ const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    clearResult(){}
+    clearResult(state){
+      sessionStorage.removeItem("userInfo")
+      state.formContent=null
+      state.isLoggin= false
+      state.allUser=[]
+    }
   },
   extraReducers(builder) {
     // login start

@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ title, type = "submit" }) => {
   return (
-    <button type={type} className={Style.button}>
+    <button type={type} className={Style.button} style={{ cursor: "pointer" }}>
       {title}
     </button>
   );
