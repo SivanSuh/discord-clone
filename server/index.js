@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const userRouter = require("./routes/userRoutes.js");
+const chatRoutes = require("./routes/chatRoutes.js");
 const authRouter = require("./routes/authRoutes.js");
-const cookieParser = require("cookie-parser");
+const { Server } = require("socket.io");
 const cors = require("cors");
 dotenv.config();
 
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 // app.use(cookieParser());
 
-//app.use("/api/user", userRouter);
+app.use("/api/chats", chatRoutes);
 app.use("/api/auth", authRouter);
 
 const Connection = async () => {
