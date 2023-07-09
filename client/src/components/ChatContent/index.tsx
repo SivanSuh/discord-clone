@@ -3,13 +3,36 @@ import Input from "../Atoms/Input";
 import Style from "./style.module.css";
 import Button from "../Atoms/Button";
 import ChatDialog from "./ChatDialog";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
 
 interface ChatContentProps {
   select: any;
 }
+const socket = io("http://localhost:8080");
 
 const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
-  const { register } = useForm<FieldValues>();
+  const { register, handleSubmit } = useForm<FieldValues>();
+  const [msg, setMessage] = useState("");
+  const [messages, setMessages] = useState<any[]>([]);
+
+  useEffect(() => {
+    socket.on("message", (data: any) => {
+      setMessages((prev: any) => [...prev, data]);
+    });
+  });
+
+  const onSubmit = (event: any) => {
+    // event.preventDefault();
+    console.log("message", event);
+    setMessage(event);
+
+    console.log("msg", msg);
+    socket.emit("sendMessage", { event });
+
+    setMessages((prev: any) => [...prev, event]);
+  };
+  console.log("messages", messages);
   return (
     <>
       {select.name !== "" ? (
@@ -21,22 +44,29 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             <span className="mx-3">{select?.name}</span>
           </nav>
           <main className={Style.mainContent}>
-            <ChatDialog />
-            <ChatDialog color="red" position="end" />
+            {messages.map((item: any) => {
+              console.log("idadadfaa", item);
+              return (
+                <ChatDialog color="red" position="end" item={item.message} />
+              );
+            })}
           </main>
-          <footer className={Style.footer}>
+          <form onSubmit={handleSubmit(onSubmit)} className={Style.footer}>
             <div className="flex-1">
               <Input
-                id="add"
+                id="message"
                 placeholder="Add new message"
                 type="text"
+                name="message"
+                // value={msg}
+                // onChange={() => setMessage()}
                 register={register}
               />
             </div>
             <div>
-              <Button type="button" title="Send" />
+              <Button type="submit" title="Send" />
             </div>
-          </footer>
+          </form>
         </div>
       ) : (
         <div className="bg-gray-300 w-full h-full flex-1"></div>

@@ -6,12 +6,11 @@ const chatRoutes = require("./routes/chatRoutes.js");
 const authRouter = require("./routes/authRoutes.js");
 const { Server } = require("socket.io");
 const cors = require("cors");
+
 dotenv.config();
 
 app.use(cors());
-// mongoose.set("strictQuery", true);
 app.use(express.json());
-// app.use(cookieParser());
 
 app.use("/api/chats", chatRoutes);
 app.use("/api/auth", authRouter);
@@ -26,7 +25,23 @@ const Connection = async () => {
     .catch((err) => console.log(err));
 };
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log("8080 portunda dinliyor");
   Connection();
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+io.on("connection", (socket) => {
+  console.log(`Socket ${socket.id} connected`);
+  socket.on("sendMessage", (message) => {
+    io.emit("message", message);
+  });
+  // socket.on("disconnect", () => {
+  //   console.log("socket disconnect");
+  // });
 });
