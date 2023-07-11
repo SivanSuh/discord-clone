@@ -22,15 +22,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
     });
   });
 
-  const onSubmit = (event: any) => {
+  const onSubmit = () => {
     // event.preventDefault();
-    console.log("message", event);
-    setMessage(event);
-
-    console.log("msg", msg);
-    socket.emit("sendMessage", { event });
-
-    setMessages((prev: any) => [...prev, event]);
+    socket.emit("sendMessage", { msg });
+    setMessage("");
   };
   console.log("messages", messages);
   return (
@@ -44,22 +39,27 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             <span className="mx-3">{select?.name}</span>
           </nav>
           <main className={Style.mainContent}>
-            {messages.map((item: any) => {
+            {messages.map((item: any, index: any) => {
               console.log("idadadfaa", item);
               return (
-                <ChatDialog color="red" position="end" item={item.message} />
+                <ChatDialog
+                  color="red"
+                  key={index}
+                  position="end"
+                  item={item.msg}
+                />
               );
             })}
           </main>
           <form onSubmit={handleSubmit(onSubmit)} className={Style.footer}>
             <div className="flex-1">
               <Input
-                id="message"
+                id="msg"
                 placeholder="Add new message"
                 type="text"
-                name="message"
-                // value={msg}
-                // onChange={() => setMessage()}
+                name="msg"
+                value={msg}
+                onChange={(e) => setMessage(e.target.value)}
                 register={register}
               />
             </div>

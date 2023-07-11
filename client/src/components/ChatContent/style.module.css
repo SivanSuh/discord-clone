@@ -1,5 +1,5 @@
 .mainContent {
-    @apply bg-sky-300 w-full flex flex-col
+    @apply bg-sky-300 w-full flex flex-col max-h-screen overflow-auto
 }
 .chatNavbar {
     @apply w-full bg-white h-16 flex items-center p-2
