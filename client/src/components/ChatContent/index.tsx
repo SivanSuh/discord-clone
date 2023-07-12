@@ -20,10 +20,11 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
     socket.on("message", (data: any) => {
       setMessages((prev: any) => [...prev, data]);
     });
-  });
+  }, []);
 
   const onSubmit = () => {
     // event.preventDefault();
+    console.log("msg", msg);
     socket.emit("sendMessage", { msg });
     setMessage("");
   };
