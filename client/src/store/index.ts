@@ -8,10 +8,12 @@ import { persistReducer, persistStore,   FLUSH,
     REGISTER, } from 'redux-persist'
 import storage from "redux-persist/lib/storage"
 import { useDispatch } from 'react-redux'
+import chatSlice from './ChatSlice'
 
 
 const rootReducer = combineReducers({
-    user:authSlice
+    user:authSlice,
+    chat:chatSlice
 })
 
 const persistConfig = {

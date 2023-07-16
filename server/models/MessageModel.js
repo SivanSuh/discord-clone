@@ -5,11 +5,12 @@ const messageSchema = mongoose.Schema(
     sender: {
       type: mongoose.Types.ObjectId,
       ref: "User",
-      required: true,
+      // required: true,
     },
     users: Array,
     message: {
-      text: { type: String, trim: true },
+      type: String,
+      trim: true,
     },
   },
   {

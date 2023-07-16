@@ -5,6 +5,9 @@ import Button from "../Atoms/Button";
 import ChatDialog from "./ChatDialog";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import { AddMessage, getMessage } from "@/store/ChatSlice";
+import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store";
 
 interface ChatContentProps {
   select: any;
@@ -13,8 +16,11 @@ const socket = io("http://localhost:8080");
 
 const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
   const { register, handleSubmit } = useForm<FieldValues>();
-  const [msg, setMessage] = useState("");
+  const { formContent } = useSelector((state: RootState) => state.user);
+
   const [messages, setMessages] = useState<any[]>([]);
+  const dispatch = AppDispatch();
+  console.log("form content", formContent);
 
   useEffect(() => {
     socket.on("message", (data: any) => {
@@ -22,16 +28,35 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
     });
   }, []);
 
-  const onSubmit = () => {
+  const [msg, setMessage] = useState({
+    message: "",
+    from: formContent?._id,
+    to: select?.id,
+  });
+
+  const onSubmit = async () => {
     // event.preventDefault();
     console.log("msg", msg);
     socket.emit("sendMessage", { msg });
-    setMessage("");
+    await dispatch(AddMessage(msg));
+    await setMessage({
+      message: "",
+      from: formContent?._id,
+      to: select?.id,
+    });
+    await dispatch(
+      getMessage({
+        from: formContent?._id,
+        to: select?.id,
+      })
+    );
+    console.log("giden messaj", msg);
   };
   console.log("messages", messages);
+  console.log("select", select);
   return (
     <>
-      {select.name !== "" ? (
+      {select?.id !== "" ? (
         <div className={Style.mainContent}>
           <nav className={Style.chatNavbar}>
             <div className="w-9 h-9 ">
@@ -44,10 +69,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
               console.log("idadadfaa", item);
               return (
                 <ChatDialog
-                  color="red"
-                  key={index}
-                  position="end"
-                  item={item.msg}
+                  color={item.msg.from !== select?.id ? "red" : "blue"}
+                  key={item.msg.from}
+                  position={item.msg.from !== select?.id ? "end" : "start"}
+                  item={item.msg.message}
                 />
               );
             })}
@@ -55,12 +80,18 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
           <form onSubmit={handleSubmit(onSubmit)} className={Style.footer}>
             <div className="flex-1">
               <Input
-                id="msg"
+                id="message"
                 placeholder="Add new message"
                 type="text"
-                name="msg"
-                value={msg}
-                onChange={(e) => setMessage(e.target.value)}
+                name="message"
+                value={msg.message}
+                onChange={(e) => {
+                  console.log("degiişim", e.target.value);
+                  setMessage({
+                    ...msg,
+                    message: e.target.value,
+                  });
+                }}
                 register={register}
               />
             </div>

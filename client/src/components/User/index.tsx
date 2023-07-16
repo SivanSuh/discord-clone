@@ -14,7 +14,7 @@ const User: React.FC<UserProp> = ({ image, title, onClick, id, select }) => {
   return (
     <div
       className={`flex items-center p-2  text-white cursor-pointer ease-in-out hover:bg-gray-300 ${
-        select?.id === id ? "bg-green-500" : "bg-transparent"
+        select?.id == id ? "bg-green-500" : "bg-transparent"
       } `}
       onClick={onClick}
     >
