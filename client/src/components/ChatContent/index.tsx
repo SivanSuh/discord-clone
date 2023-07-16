@@ -17,15 +17,23 @@ const socket = io("http://localhost:8080");
 const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
   const { register, handleSubmit } = useForm<FieldValues>();
   const { formContent } = useSelector((state: RootState) => state.user);
+  const { allMessage } = useSelector((state: RootState) => state.chat);
 
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any[]>(allMessage);
   const dispatch = AppDispatch();
   console.log("form content", formContent);
+  console.log("all messages", allMessage);
 
   useEffect(() => {
     socket.on("message", (data: any) => {
       setMessages((prev: any) => [...prev, data]);
     });
+    dispatch(
+      getMessage({
+        from: formContent?._id,
+        to: select?.id,
+      })
+    );
   }, []);
 
   const [msg, setMessage] = useState({
@@ -44,12 +52,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
       from: formContent?._id,
       to: select?.id,
     });
-    await dispatch(
-      getMessage({
-        from: formContent?._id,
-        to: select?.id,
-      })
-    );
+
     console.log("giden messaj", msg);
   };
   console.log("messages", messages);
@@ -65,14 +68,13 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             <span className="mx-3">{select?.name}</span>
           </nav>
           <main className={Style.mainContent}>
-            {messages.map((item: any, index: any) => {
+            {messages.map((item: any) => {
               console.log("idadadfaa", item);
               return (
                 <ChatDialog
-                  color={item.msg.from !== select?.id ? "red" : "blue"}
-                  key={item.msg.from}
-                  position={item.msg.from !== select?.id ? "end" : "start"}
-                  item={item.msg.message}
+                  color={item.fromSelf ? "red" : "blue"}
+                  position={item.fromSelf == true ? "end" : "start"}
+                  item={item.message}
                 />
               );
             })}

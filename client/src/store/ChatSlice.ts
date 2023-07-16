@@ -10,7 +10,8 @@ interface ChatProps {
 }
 const initialState = {
   content: {} as ChatProps,
-  error:false
+  error:false,
+  allMessage:[]
 };
 export const AddMessage = createAsyncThunk(
   "sendMessage",
@@ -40,6 +41,9 @@ const chatSlice = createSlice({
     builder.addCase(AddMessage.rejected, (state, action) => {
       state.error = true
     });
+    builder.addCase(getMessage.fulfilled,(state,action) => {
+        state.allMessage = action.payload
+    })
   },
 });
 
