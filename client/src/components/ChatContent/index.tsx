@@ -28,21 +28,21 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
 
   const [messages, setMessages] = useState<AllMessageProps[]>(allMessage);
   const dispatch = AppDispatch();
-  console.log("form content", formContent);
-  console.log("all messages", allMessage);
 
   useEffect(() => {
     socket.on("message", (data: any) => {
       console.log("dataaaadasd", data);
       setMessages((prev: any) => [...prev, data.msg]);
     });
-    dispatch(
-      getMessage({
-        from: formContent?._id,
-        to: select?.id,
-      })
-    );
-  }, []);
+    if (select.id !== "") {
+      dispatch(
+        getMessage({
+          from: formContent?._id,
+          to: select?.id,
+        })
+      );
+    }
+  }, [dispatch]);
 
   const [msg, setMessage] = useState({
     message: "",
@@ -52,16 +52,18 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
 
   const onSubmit = async () => {
     // event.preventDefault();
-    socket.emit("sendMessage", { msg });
-    await dispatch(AddMessage(msg));
-    await setMessage({
-      message: "",
-      from: formContent?._id,
-      to: select?.id,
-    });
+    if (msg.message.trim() !== "") {
+      await socket.emit("sendMessage", { msg });
+      await dispatch(AddMessage(msg));
+      await setMessage({
+        message: "",
+        from: "",
+        to: "",
+      });
+    }
   };
-  console.log("messages", messages);
   console.log("select", select);
+  console.log("message", msg);
 
   return (
     <>
@@ -75,11 +77,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
           </nav>
           <main className={Style.mainContent}>
             {messages.map((item: any, index: any) => {
-              console.log("idadadfaa", item);
               return (
                 <ChatDialog
                   color={item?.fromSelf ? "red" : "blue"}
-                  position={item?.fromSelf ? "end" : "start"}
+                  position={!item?.fromSelf ? "end" : "start"}
                   item={item}
                   key={index}
                 />
@@ -97,7 +98,8 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
                 onChange={(e) => {
                   console.log("degiişim", e);
                   setMessage({
-                    ...msg,
+                    from: formContent._id,
+                    to: select.id,
                     message: e.target.value,
                   });
                 }}

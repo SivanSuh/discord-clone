@@ -34,7 +34,7 @@ const addMessage = async (req, res, next) => {
       sender: from,
     });
 
-    if (data) return res.json({ msg: "Message added" });
+    if (data) return res.send(data);
     else return res.json({ msg: "failed message" });
   } catch (err) {
     next(err);

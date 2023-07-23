@@ -24,16 +24,16 @@ const MainTemplate: React.FC<MainProps> = ({
   const dispatch = AppDispatch();
   useEffect(() => {
     dispatch(allUsers());
-    if (select?.id) {
+    if (select?.id !== "") {
       dispatch(
         getMessage({
           from: formContent?._id,
           to: select?.id,
         })
       );
-      console.log("istek", select?.id);
     }
   }, [dispatch]);
+  console.log("istek", select?.id);
 
   const checkMessage = (e: any) => {
     console.log("seçildi ", e);

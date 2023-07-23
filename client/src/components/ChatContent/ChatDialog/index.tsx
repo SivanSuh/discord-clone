@@ -12,7 +12,6 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
   color = "blue",
   item,
 }) => {
-  console.log("item", item);
   const dates = new Date(item?.createData);
 
   let formatDate = dates.toLocaleDateString("tr-TR", {
