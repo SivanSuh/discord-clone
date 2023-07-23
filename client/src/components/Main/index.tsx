@@ -40,7 +40,7 @@ const MainTemplate: React.FC<MainProps> = ({
     setSelect({
       name: e.userName,
       image: e.img,
-      id: e?._id,
+      id: e._id,
     });
   };
 
@@ -59,12 +59,13 @@ const MainTemplate: React.FC<MainProps> = ({
         </div>
         <div>
           {allUser
-            .filter((val) => formContent._id !== val._id)
+            .filter((val) => val._id !== formContent._id)
             .map((items) => {
+              console.log("items idli sleects", items);
               return (
                 <User
                   image={items.img}
-                  id={items?._id}
+                  id={items._id}
                   key={items?._id}
                   select={select}
                   title={items.userName}

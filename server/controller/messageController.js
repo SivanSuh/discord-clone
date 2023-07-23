@@ -10,9 +10,12 @@ const getMessages = async (req, res, next) => {
     }).sort({ updatedAt: 1 });
 
     const projectedMessage = messages.map((msg) => {
+      console.log("server msg", msg);
       return {
-        fromSelf: msg.sender.toString() === from,
+        fromSelf: msg.sender.toString(),
         message: msg.message,
+        createData: msg.createdAt,
+        users: msg.users,
       };
     });
 

@@ -19,14 +19,22 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
   const { formContent } = useSelector((state: RootState) => state.user);
   const { allMessage } = useSelector((state: RootState) => state.chat);
 
-  const [messages, setMessages] = useState<any[]>(allMessage);
+  interface AllMessageProps {
+    fromSelf: string;
+    message: string;
+    createdAt: string;
+    users: any[];
+  }
+
+  const [messages, setMessages] = useState<AllMessageProps[]>(allMessage);
   const dispatch = AppDispatch();
   console.log("form content", formContent);
   console.log("all messages", allMessage);
 
   useEffect(() => {
     socket.on("message", (data: any) => {
-      setMessages((prev: any) => [...prev, data]);
+      console.log("dataaaadasd", data);
+      setMessages((prev: any) => [...prev, data.msg]);
     });
     dispatch(
       getMessage({
@@ -44,7 +52,6 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
 
   const onSubmit = async () => {
     // event.preventDefault();
-    console.log("msg", msg);
     socket.emit("sendMessage", { msg });
     await dispatch(AddMessage(msg));
     await setMessage({
@@ -52,11 +59,10 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
       from: formContent?._id,
       to: select?.id,
     });
-
-    console.log("giden messaj", msg);
   };
   console.log("messages", messages);
   console.log("select", select);
+
   return (
     <>
       {select?.id !== "" ? (
@@ -68,13 +74,14 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
             <span className="mx-3">{select?.name}</span>
           </nav>
           <main className={Style.mainContent}>
-            {messages.map((item: any) => {
+            {messages.map((item: any, index: any) => {
               console.log("idadadfaa", item);
               return (
                 <ChatDialog
-                  color={item.fromSelf ? "red" : "blue"}
-                  position={item.fromSelf == true ? "end" : "start"}
-                  item={item.message}
+                  color={item?.fromSelf ? "red" : "blue"}
+                  position={item?.fromSelf ? "end" : "start"}
+                  item={item}
+                  key={index}
                 />
               );
             })}
@@ -88,7 +95,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
                 name="message"
                 value={msg.message}
                 onChange={(e) => {
-                  console.log("degiişim", e.target.value);
+                  console.log("degiişim", e);
                   setMessage({
                     ...msg,
                     message: e.target.value,
