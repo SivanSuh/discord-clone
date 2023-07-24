@@ -7,7 +7,7 @@ interface InputProps {
   placeholder: string;
   type: "text" | "email" | "password" | "file";
   register: UseFormRegister<FieldValues>;
-  errors?: FieldErrors;
+  errors?: FieldErrors | undefined | any;
   required?: boolean;
   name?: string;
   onChange?: (e: any) => void;
@@ -20,7 +20,6 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   type,
   errors,
-  className,
   required,
   value,
   onChange,
@@ -29,9 +28,9 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <input
+      className={`${errors?.[id] ? Style.required : Style.input}`}
       id={id}
       {...register(id, { required })}
-      className={Style.input}
       placeholder={placeholder}
       type={type}
       value={value}

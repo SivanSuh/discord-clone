@@ -1,3 +1,6 @@
 .input {
     @apply border-2 p-2 outline-none w-full
 }
+.required {
+ @apply input border border-red-500
+}
