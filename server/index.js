@@ -6,6 +6,7 @@ const chatRoutes = require("./routes/chatRoutes.js");
 const authRouter = require("./routes/authRoutes.js");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const Message = require("./models/MessageModel.js");
 
 dotenv.config();
 
@@ -36,11 +37,17 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
 io.on("connection", (socket) => {
   console.log(`Socket ${socket.id} connected`);
   socket.on("sendMessage", (message) => {
-    console.log("message", message);
+    console.log("message giden", message);
     io.emit("message", message);
+    Message.create({
+      message: message.message,
+      users: [message.from, message.to],
+      sender: message.from,
+    });
   });
   // socket.on("disconnect", () => {
   //   console.log("socket disconnect");

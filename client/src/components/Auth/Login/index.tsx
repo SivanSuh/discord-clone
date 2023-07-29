@@ -22,21 +22,9 @@ const Login = () => {
     },
   });
 
-  // const [values, setValues] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  //const user = useSelector((state: RootState) => state.user);
   const router = useRouter();
 
   const dispatch = AppDispatch();
-
-  // const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValues({
-  //     ...values,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log("login data", data);
