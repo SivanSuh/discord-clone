@@ -11,8 +11,8 @@ COPY . .
 
 RUN yarn install
 
-EXPOSE 8080
+EXPOSE 3001
 # run application
 
-CMD ["yarn","start"]
+CMD ["yarn","dev"]
 

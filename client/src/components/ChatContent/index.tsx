@@ -42,7 +42,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
   useEffect(() => {
     socket.on("message", (data: any) => {
       console.log("dataaaadasd", data);
-      setMessages((prev: any) => [...prev, data]);
+      setMessages([...messages, data]);
     });
     if (select.id !== "") {
       dispatch(
@@ -52,7 +52,7 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
         })
       );
     }
-  }, [dispatch, select]);
+  }, [dispatch, select, socket]);
 
   const [msg, setMessage] = useState({
     message: "",
@@ -72,10 +72,9 @@ const ChatContent: React.FC<ChatContentProps> = ({ select }) => {
         to: "",
       });
     }
+    return data;
   };
   console.log("select", select);
-
-  console.log("tüm gelen mesajlar", messages);
 
   return (
     <>
