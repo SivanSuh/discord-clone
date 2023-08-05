@@ -37,6 +37,14 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+const dates = new Date();
+let formatDate = dates.toLocaleDateString("tr-TR", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+});
 
 io.on("connection", (socket) => {
   console.log(`Socket ${socket.id} connected`);
@@ -47,6 +55,7 @@ io.on("connection", (socket) => {
       message: message.message,
       users: [message.from, message.to],
       sender: message.from,
+      createDate: formatDate,
     });
   });
   // socket.on("disconnect", () => {
